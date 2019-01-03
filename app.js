@@ -9,7 +9,7 @@ const express    = require("express"),
 // let downloadFileName;
 
 //Connecting to DB and seeding
-mongoose.connect("mongodb://localhost/assignmentsDB");
+mongoose.connect("mongodb://localhost/assignmentsDB", { useNewUrlParser: true });
 // seedDB();
 
 //IMPORTING THE ROUTES
@@ -36,7 +36,7 @@ app.get("/", (req,res) => {
 // UPLOAD
 //================
 app.get("/upload", (req,res) =>{
-    res.render("upload"); 
+    res.render("upload");
 });
 
 app.post("/uploadFile", (req,res) => {
@@ -52,7 +52,7 @@ app.post("/uploadFile", (req,res) => {
             let oldPath = files.file.path;
             let newPath = `files/${fields.branch}/${fields.year}/${fields.division}/${fileName}`;
             fs.rename(oldPath,newPath);
-            
+
             //Adding the assignment to the DB
             Assignment.create({
                 branch: fields.branch,
@@ -105,7 +105,7 @@ app.get("/remove/:id", (req,res) =>{
                     Assignment.remove({_id:req.params.id}, (err) => {
                         if(err){
                             console.log(err);
-                        } 
+                        }
                     });
                 }
             });
