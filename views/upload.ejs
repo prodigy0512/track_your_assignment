@@ -1,0 +1,45 @@
+<% include partials/header %>
+    <h1 class="header">Upload a Assignment</h1>
+    <form action="/uploadFile" enctype="multipart/form-data" method="POST">
+        <div class="form-group custom-form-width">
+            <label>Assignment Name:</label> 
+            <input type="text" name="assignment_name" class="form-control" aria-describedby="assignHelp" placeholder="Eg: Applied Maths 2 - Tutorial No. 4">
+            <small class="form-text text-muted">Please enter a proper assignment name so that others can identify easily</small>
+        </div>
+        
+        <div class="form-group custom-form-width">
+            <label>Branch:</label> 
+            <select class="form-control" id="exampleFormControlSelect1" name="branch">
+                <option value="comps">Computer</option>
+                <option value="electronics">Electronics</option>
+                <option value="it">Information Technology</option>
+                <option value="extc">Electronics and Telecommunication</option>
+                <option value="instru">Instrumental</option>
+            </select>
+        </div>
+        
+        <div class="form-group custom-form-width">
+            <label>Year:</label> 
+            <select class="form-control" id="exampleFormControlSelect1" name="year">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+        </div>
+        
+        <div class="form-group custom-form-width">
+            <label>Year:</label> 
+            <select class="form-control" id="exampleFormControlSelect1" name="division">
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+            </select>
+        </div>
+        
+        <div class="form-group custom-form-width">
+            <label>File to upload (PDF ONLY!)</label>
+            <input type="file" class="form-control-file" id="exampleFormControlFile1" name="file">
+        </div>
+        <button type="submit" class="btn btn-outline-info">Submit</button>
+    </form>
+<% include partials/footer %>
