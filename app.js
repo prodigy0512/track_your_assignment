@@ -3,14 +3,14 @@ const express    = require("express"),
       mongoose   = require("mongoose"),
       Assignment = require("./models/assignmentsModel"),
       formidable = require('formidable'),
-      seedDB     = require("./seed"),
+    //   seedDB     = require("./seed"),
       fs         = require("fs");
 
 let downloadFileName;
 
 //Connecting to DB and seeding
 mongoose.connect("mongodb://localhost/assignmentsDB");
-seedDB();
+// seedDB();
 
 //IMPORTING THE ROUTES
 const compsRoutes      = require("./routes/comps.js"),
@@ -50,7 +50,7 @@ app.post("/uploadFile", (req,res) => {
         } else {
             let fileName = fields.assignment_name.replace(/\s/g,'') + ".pdf";
             let oldPath = files.file.path;
-            let newPath = "files/" + fileName;
+            let newPath = `files/${fields.branch}/${fields.year}/${fields.division}/${fileName}`;
             fs.rename(oldPath,newPath);
             
             //Adding the assignment to the DB
@@ -58,7 +58,8 @@ app.post("/uploadFile", (req,res) => {
                 branch: fields.branch,
                 year: parseInt(fields.year,10),
                 division: fields.division,
-                title: fields.assignment_name
+                title: fields.assignment_name,
+                path: newPath
             });
             res.send("Successful!");
         }
@@ -73,20 +74,21 @@ app.get("/download/:id", (req,res) => {
         if(err) {
             console.log(err);
         } else {
-            downloadFileName = assignment[0].title
-            res.redirect("/downloadfile");
+            res.download(assignment[0].path);
+            // downloadFileName = assignment[0].title
+            // res.redirect("/downloadfile");
         }
     });
 });
 
-app.get("/downloadfile", (req,res) => {
-    if(downloadFileName != null) {
-        res.download("files/" + downloadFileName.replace(/\s/g, "") + ".pdf");
-    } else {
-        res.redirect("/");
-    }
-    downloadFileName = null;
-});
+// app.get("/downloadfile", (req,res) => {
+//     if(downloadFileName != null) {
+//         res.download("files/" + downloadFileName.replace(/\s/g, "") + ".pdf");
+//     } else {
+//         res.redirect("/");
+//     }
+//     downloadFileName = null;
+// });
 
 // STARTING THE SERVER
 app.listen(process.env.PORT,process.env.IP, () => {
