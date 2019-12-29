@@ -6,7 +6,7 @@ const express    = require("express"),
     //   seedDB     = require("./seed"),
       fs         = require("fs");
 
-let downloadFileName;
+// let downloadFileName;
 
 //Connecting to DB and seeding
 mongoose.connect("mongodb://localhost/assignmentsDB");
@@ -74,7 +74,7 @@ app.get("/download/:id", (req,res) => {
         if(err) {
             console.log(err);
         } else {
-            res.download(assignment[0].path);
+            res.download(assignment[0].path)
             // downloadFileName = assignment[0].title
             // res.redirect("/downloadfile");
         }
@@ -89,6 +89,30 @@ app.get("/download/:id", (req,res) => {
 //     }
 //     downloadFileName = null;
 // });
+
+//=========================
+// ROUTES TO REMOVE FILE
+//=========================
+app.get("/remove/:id", (req,res) =>{
+    Assignment.find({_id:req.params.id},(err,assignment) => {
+        if(err) {
+            console.log(err);
+        } else {
+            fs.unlink(assignment[0].path,(err) => {
+                if(err) {
+                    console.log(err);
+                } else {
+                    Assignment.remove({_id:req.params.id}, (err) => {
+                        if(err){
+                            console.log(err);
+                        } 
+                    });
+                }
+            });
+            res.send("Done!");
+        }
+    });
+});
 
 // STARTING THE SERVER
 app.listen(process.env.PORT,process.env.IP, () => {

@@ -5,15 +5,17 @@
             <thead>
                 <tr>
                     <th scope="col">Title</th>
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <% for(let i=0; i<assignments.length;i++) { %>
                     <tr>
                         <td><a href="/download/<%=assignments[i]._id%>"><%= assignments[i].title %></a></td>
-                    </tr>    
+                        <td><a href="/remove/<%=assignments[i]._id%>">Remove</a></td>
+                    </tr>
                 <% } %>
-                </tbody> 
+            </tbody> 
         </table>
     </div>
 <% include partials/footer %>
