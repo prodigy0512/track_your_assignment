@@ -74,7 +74,7 @@ app.get("/download/:id", (req,res) => {
         if(err) {
             console.log(err);
         } else {
-            res.download(assignment[0].path)
+            res.download(assignment[0].path);
             // downloadFileName = assignment[0].title
             // res.redirect("/downloadfile");
         }

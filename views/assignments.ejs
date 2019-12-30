@@ -1,21 +1,18 @@
 <% include partials/header %>
-    <div class="container">
-        <h1 class="header">Click a assignment to download</h1>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% for(let i=0; i<assignments.length;i++) { %>
-                    <tr>
-                        <td><a href="/download/<%=assignments[i]._id%>"><%= assignments[i].title %></a></td>
-                        <td><a href="/remove/<%=assignments[i]._id%>">Remove</a></td>
-                    </tr>
-                <% } %>
-            </tbody> 
-        </table>
-    </div>
-<% include partials/footer %>
+<div class="container">
+	<h1 class="header">Click a assignment to download</h1>
+	<hr>
+	<div class="row">
+	  <% for(let i=0; i<assignments.length;i++) { %>
+  		<div class="col-lg-4">
+  			<div class="card">
+  				<div class="card-body">
+  					<h5 class="card-title"><%= assignments[i].title %></h5>
+  					<a href="/download/<%=assignments[i]._id%>" class="card-link">Download</a>
+  					<a href="/remove/<%=assignments[i]._id%>" class="card-link">Delete</a>
+  				</div>
+  			</div>
+  		</div>
+		<% } %>
+	</div>
+</div><% include partials/footer %>
